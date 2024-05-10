@@ -1,0 +1,47 @@
+import pandas as pd
+
+
+data=pd.read_csv("Social_Network_Ads.csv")
+data
+
+
+data["Gender"].replace(["Male","Female"],[0,1],inplace=True)
+data
+
+
+x=data.drop(["Purchased"],axis=1)
+y=data["Purchased"]
+
+
+from sklearn.model_selection import train_test_split
+
+
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2,random_state=0)
+
+
+from sklearn.linear_model import LogisticRegression
+
+
+lm=LogisticRegression()
+model=lm.fit(xtrain,ytrain)
+ytest_pred=lm.predict(xtest)
+
+
+from sklearn.metrics import confusion_matrix
+
+
+cm=confusion_matrix(ytest,ytest_pred)
+TN,FP,FN,TP=cm.ravel()
+print("True Positive : ",TP)
+print("True Negative : ",TN)
+print("False Positive : ",FP)
+print("False Negative : ",FN)
+
+
+from sklearn.metrics import accuracy_score,recall_score,precision_score
+
+
+print("Precision : ",precision_score(ytest,ytest_pred))
+print("Recall : ",recall_score(ytest,ytest_pred))
+print("Accuracy : ",accuracy_score(ytest,ytest_pred))
+print("Error Rate : ",(1-accuracy_score(ytest,ytest_pred)))

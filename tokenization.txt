@@ -1,0 +1,27 @@
+from collections import defaultdict
+import math
+
+documents = [
+    "The quick brown fox jumps over the lazy dog.",
+    "A quick brown dog outpaces a quick fox.",
+    "The lazy dog sleeps all day.",
+    "A brown dog is a lazy dog.",
+    "The fox is quick and brown."
+]
+
+tokenized_documents = [doc.lower().split() for doc in documents]
+
+for sentence in tokenized_documents:
+      sentence_tf = defaultdict(int)
+      for word in sentence:
+          sentence_tf[word] += (1/len(sentence))
+      print(sentence_tf)
+
+n=len(tokenized_documents)
+idf = defaultdict(int)
+for sentence in tokenized_documents:
+    for word in set(sentence):
+        idf[word] += 1
+for word in idf:
+    idf[word]=math.log(n/(idf[word]+1))
+    print(word,idf[word])

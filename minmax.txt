@@ -1,0 +1,13 @@
+import pandas as pd
+import numpy as np
+
+data=pd.read_csv("Iris.csv")
+data
+
+data.describe()
+
+data = df.groupby(['Species'])
+data.agg([np.mean,np.median,np.var,np.std,np.min,np.max])
+
+data = df .groupby(['Species'])
+data.agg(lambda x: x.mode()[0])

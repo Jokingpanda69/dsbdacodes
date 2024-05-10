@@ -1,0 +1,41 @@
+import nltk
+
+document = "This is a sample document for text preprocessing. It includes tokenization, POS tagging, stop words removal, stemming, and lemmatization."
+
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+
+tokens=word_tokenize(document)
+print(tokens)
+
+from nltk import pos_tag
+nltk.download('averaged_perceptron_tagger')
+
+tags=pos_tag(tokens)
+print(tags)
+
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+
+stop_words = stopwords.words('english')
+
+cleaned_token = []
+for word in tokens:
+  if word not in stop_words:
+    cleaned_token.append(word)
+
+print("Unclean version ", tokens)
+print("Clean Version", cleaned_token)
+
+from nltk.stem import WordNetLemmatizer
+nltk.download('wordnet')
+
+lemmatizer = WordNetLemmatizer()
+lemmatized_tokens = [lemmatizer.lemmatize(word) for word in tokens]
+print(lemmatized_tokens)
+
+from nltk.stem import PorterStemmer
+
+stemmer = PorterStemmer()
+stemmed_tokens = [stemmer.stem(word) for word in tokens]
+print(stemmed_tokens)

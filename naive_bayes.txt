@@ -1,0 +1,32 @@
+import pandas as pd
+
+
+data = pd.read_csv("Iris.csv")
+data
+
+
+x=data.drop(["Species"],axis=1)
+y=data["Species"]
+
+
+from sklearn.model_selection import train_test_split
+
+
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2,random_state=0)
+
+
+from sklearn.naive_bayes import GaussianNB
+
+
+gauss=GaussianNB()
+gauss.fit(xtrain,ytrain)
+ytest_pred=gauss.predict(xtest)
+
+
+from sklearn.metrics import accuracy_score,recall_score,precision_score
+
+
+print("Recall Score : ",recall_score(ytest,ytest_pred,average="micro"))
+print("Precision Score : ",precision_score(ytest,ytest_pred,average="micro"))
+print("Accuracy Score : ",accuracy_score(ytest,ytest_pred))
+print("Error Rate Score : ",1-(accuracy_score(ytest,ytest_pred)))

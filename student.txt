@@ -1,0 +1,45 @@
+import pandas as pd
+
+data=pd.read_csv("student.csv")
+data
+
+data.isnull().sum()
+
+data1=data.copy()
+data1=data.fillna(data.mean(numeric_only=True))
+data1
+
+data2=data.copy()
+data2=data.fillna(data.median(numeric_only=True))
+data2
+
+data.boxplot()
+
+import matplotlib.pyplot as plt
+
+x=data["FE per"]
+y=data["SE per"]
+plt.scatter(x,y)
+plt.show()
+
+df=pd.read_csv("student_outliers.csv")
+df.boxplot()
+
+Q1=df["HSC per"].quantile(0.25)
+Q3=df["HSC per"].quantile(0.75)
+IQR=Q3-Q1
+higher=Q3+(IQR*1.5)
+lower=Q1-(IQR*1.5)
+
+import numpy as np
+
+df1 = df.copy()
+df1["HSC per"] = np.where(df["HSC per"] > higher, df["HSC per"].mean(), df["HSC per"])
+df1["HSC per"] = np.where(df1["HSC per"] < lower, df1["HSC per"].mean(), df1["HSC per"])
+df1.boxplot()
+
+from sklearn.preprocessing import MinMaxScaler
+
+minmax=MinMaxScaler()
+df[["HSC per","FE per","SE per","TE per","BE per"]]=minmax.fit_transform(df[["HSC per","FE per","SE per","TE per","BE per"]])
+df

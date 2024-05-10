@@ -1,0 +1,12 @@
+import pandas as pd
+
+data=pd.read_csv("Titanic.csv")
+data
+
+data["Fare"].hist()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.boxplot(x="Sex",y="Age",data=data,hue="Survived")
+plt.show()
